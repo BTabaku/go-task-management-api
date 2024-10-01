@@ -3,6 +3,7 @@
 package main
 
 import (
+	"go-task-management-api/internal/config"
 	"go-task-management-api/internal/routes"
 	"log"
 	"net/http"
@@ -10,6 +11,12 @@ import (
 )
 
 func main() {
+	// Initialize the database
+	config.InitDatabase()
+
+	// Register routes
 	router := routes.RegisterRoutes()
+
+	// Start the server
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), router))
 }
