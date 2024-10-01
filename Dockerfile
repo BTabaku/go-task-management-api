@@ -19,6 +19,9 @@ RUN go build -o main ./cmd/server/main.go
 # List the contents of the /app directory to verify the build
 RUN ls -la /app
 
+# List the contents of the /app/cmd/server directory to verify the source files
+RUN ls -la /app/cmd/server
+
 # Expose port 8080 for inter-container communication
 EXPOSE 8080
 

@@ -27,7 +27,7 @@ func LoadConfig(filePath string) (Config, error) {
 	}
 	config := Config{
 		DBDriver: getEnv("DB_DRIVER", "postgres"),
-		DBSource: getEnv("DB_SOURCE", "host=localhost user=your_user password=your_password dbname=tasks_db port=5432 sslmode=disable"),
+		DBSource: getEnv("DB_SOURCE", "host=localhost user=task_manager password=SecureP@ssw0rd! dbname=task_management port=5432 sslmode=disable"),
 	}
 	AppConfig = config
 	return config, nil
