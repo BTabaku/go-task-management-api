@@ -26,7 +26,7 @@ func GetTasks(w http.ResponseWriter, r *http.Request) {
 func CreateTask(w http.ResponseWriter, r *http.Request) {
 	var task models.Task
 	json.NewDecoder(r.Body).Decode(&task)
-	task.ID = len(tasks) + 1
+	task.ID = uint(len(tasks) + 1)
 	tasks = append(tasks, task)
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(task)
@@ -38,7 +38,7 @@ func DeleteTask(w http.ResponseWriter, r *http.Request) {
 	mu.Lock()
 	defer mu.Unlock()
 	for i, task := range tasks {
-		if task.ID == id {
+		if task.ID == uint(id) {
 			tasks = append(tasks[:i], tasks[i+1:]...)
 			break
 		}
