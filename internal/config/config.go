@@ -1,28 +1,39 @@
-// This file is responsible for loading and managing configuration settings for your application, such as database connection strings, server ports, and other environment variables.
-
 package config
 
 import (
-	"encoding/json"
+	"log"
 	"os"
+
+	"github.com/joho/godotenv"
 )
 
 type Config struct {
-	Port        string `json:"port"`
-	DatabaseUrl string `json:"database_url"`
+	DBDriver string
+	DBSource string
 }
 
-func LoadConfig(filePath string) (Config, error) {
+var AppConfig Config
 
-	var config Config
-	file, err := os.Open(filePath)
+func LoadConfig(filePath string) (Config, error) {
+	err := godotenv.Load(filePath)
 	if err != nil {
-		return config, err
+		log.Println("No .env file found")
+		return Config{}, err
 	}
 
-	defer file.Close()
+	config := Config{
+		DBDriver: getEnv("DB_DRIVER", "sqlite"),
+		DBSource: getEnv("DB_SOURCE", "tasks.db"),
+	}
 
-	err = json.NewDecoder(file).Decode(&config)
+	AppConfig = config
+	return config, nil
+}
 
-	return config, err
+func getEnv(key, defaultValue string) string {
+	value, exists := os.LookupEnv(key)
+	if !exists {
+		return defaultValue
+	}
+	return value
 }

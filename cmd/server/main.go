@@ -1,5 +1,3 @@
-// This is the entry point of your application. It sets up the server, initializes routes, and starts listening for incoming HTTP requests.
-
 package main
 
 import (
@@ -11,6 +9,13 @@ import (
 )
 
 func main() {
+	// Load configuration
+	configFilePath := ".env" // or any other path to your .env file
+	_, err := config.LoadConfig(configFilePath)
+	if err != nil {
+		log.Fatalf("Failed to load configuration: %v", err)
+	}
+
 	// Initialize the database
 	config.InitDatabase()
 
