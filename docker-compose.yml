@@ -16,7 +16,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    command: ["sh", "-c", "until pg_isready -U ${POSTGRES_USER}; do echo waiting for database; sleep 2; done; psql -U ${POSTGRES_USER} -c 'CREATE DATABASE ${POSTGRES_DB};' || true"]
 
   app:
     build:
