@@ -9,19 +9,19 @@ import (
 )
 
 func main() {
-	// Load configuration
-	configFilePath := ".env" // or any other path to your .env file
-	_, err := config.LoadConfig(configFilePath)
-	if err != nil {
-		log.Fatalf("Failed to load configuration: %v", err)
-	}
-
 	// Initialize the database
 	config.InitDatabase()
 
 	// Register routes
 	router := routes.RegisterRoutes()
 
+	// Get the port from the environment variable, default to 9090 if not set
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "9090"
+	}
+
 	// Start the server
-	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), router))
+	log.Printf("Starting server on port %s...", port)
+	log.Fatal(http.ListenAndServe(":"+port, router))
 }
