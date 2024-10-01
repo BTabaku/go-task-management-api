@@ -14,10 +14,13 @@ RUN go mod download
 COPY . .
 
 # Build the Go app
-RUN go build -o main cmd/server/main.go
+RUN go build -o main ./cmd/server/main.go
 
-# Expose port 9090 for inter-container communication
-EXPOSE 9090
+# List the contents of the /app directory to verify the build
+RUN ls -la /app
+
+# Expose port 8080 for inter-container communication
+EXPOSE 8080
 
 # Command to run the executable
 CMD ["./main"]
