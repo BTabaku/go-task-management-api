@@ -25,12 +25,10 @@ func LoadConfig(filePath string) (Config, error) {
 		log.Println("No .env file found")
 		return Config{}, err
 	}
-
 	config := Config{
-		DBDriver: getEnv("DB_DRIVER", "sqlite"),
-		DBSource: getEnv("DB_SOURCE", "tasks.db"),
+		DBDriver: getEnv("DB_DRIVER", "postgres"),
+		DBSource: getEnv("DB_SOURCE", "host=localhost user=your_user password=your_password dbname=tasks_db port=5432 sslmode=disable"),
 	}
-
 	AppConfig = config
 	return config, nil
 }

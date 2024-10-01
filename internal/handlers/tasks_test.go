@@ -1,7 +1,3 @@
-// unit test for the tasks handler
-
-// unit test for the tasks handler
-
 package handlers
 
 import (
@@ -17,7 +13,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/stretchr/testify/assert"
-	"gorm.io/driver/sqlite"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -27,27 +23,23 @@ func TestMain(m *testing.M) {
 	// Setup
 	db = setupTestDB()
 	config.SetDB(db)
-
 	// Run tests
 	code := m.Run()
-
 	// Teardown
 	teardownTestDB(db)
-
 	// Exit
 	os.Exit(code)
 }
 
 func setupTestDB() *gorm.DB {
-	// Use an in-memory SQLite database for testing
-	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
+	// Use a PostgreSQL database for testing
+	dsn := "host=localhost user=your_user password=your_password dbname=tasks_db_test port=5432 sslmode=disable"
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
-
 	// Migrate the schema
 	db.AutoMigrate(&models.Task{})
-
 	return db
 }
 
@@ -62,13 +54,11 @@ func teardownTestDB(db *gorm.DB) {
 func TestCreateTask(t *testing.T) {
 	task := models.Task{Title: "Test Task", Description: "Test Description", Status: "Pending"}
 	taskJSON, _ := json.Marshal(task)
-
 	req, _ := http.NewRequest("POST", "/tasks", bytes.NewBuffer(taskJSON))
 	req.Header.Set("Content-Type", "application/json")
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(CreateTask)
 	handler.ServeHTTP(rr, req)
-
 	assert.Equal(t, http.StatusOK, rr.Code)
 }
 
@@ -76,12 +66,10 @@ func TestDeleteTask(t *testing.T) {
 	// First, create a task to delete
 	task := models.Task{Title: "Test Task", Description: "Test Description", Status: "Pending"}
 	db.Create(&task)
-
 	req, _ := http.NewRequest("DELETE", "/tasks/"+strconv.Itoa(int(task.ID)), nil)
 	rr := httptest.NewRecorder()
 	router := mux.NewRouter()
 	router.HandleFunc("/tasks/{id}", DeleteTask).Methods("DELETE")
 	router.ServeHTTP(rr, req)
-
 	assert.Equal(t, http.StatusNoContent, rr.Code)
 }

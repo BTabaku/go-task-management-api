@@ -4,7 +4,7 @@ import (
 	"go-task-management-api/internal/models"
 	"log"
 
-	"gorm.io/driver/sqlite"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -12,11 +12,11 @@ var DB *gorm.DB
 
 func InitDatabase() {
 	var err error
-	DB, err = gorm.Open(sqlite.Open(AppConfig.DBSource), &gorm.Config{})
+	dsn := AppConfig.DBSource
+	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatal("Failed to connect to database:", err)
+		log.Fatal("Failed to connect to PostgreSQL:", err)
 	}
 
-	// Migrate the schema
 	DB.AutoMigrate(&models.Task{})
 }
