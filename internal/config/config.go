@@ -1,10 +1,12 @@
 package config
 
 import (
+	"fmt"
 	"log"
 	"os"
 
 	"github.com/joho/godotenv"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -13,10 +15,19 @@ type Config struct {
 	DBSource string
 }
 
-var (
-	AppConfig Config
-	db        *gorm.DB
-)
+var AppConfig Config
+
+// InitDatabase initializes the database connection
+func InitDatabase() {
+	dsn := AppConfig.DBSource
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err != nil {
+		fmt.Printf("failed to initialize database, got error %v\n", err)
+		panic("failed to connect database")
+	}
+	DB = db
+	fmt.Println("Database connection established")
+}
 
 // LoadConfig loads the configuration from the specified file
 func LoadConfig(filePath string) (Config, error) {
@@ -44,10 +55,5 @@ func getEnv(key, defaultValue string) string {
 
 // SetDB sets the database connection
 func SetDB(database *gorm.DB) {
-	db = database
-}
-
-// GetDB returns the database connection
-func GetDB() *gorm.DB {
-	return db
+	DB = database
 }

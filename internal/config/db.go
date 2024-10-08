@@ -10,6 +10,7 @@ import (
 
 var DB *gorm.DB
 
+// ConnectDB initializes the database connection
 func ConnectDB() {
 	dsn := os.Getenv("DB_SOURCE")
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
@@ -18,4 +19,9 @@ func ConnectDB() {
 	}
 	DB = db
 	fmt.Println("Database connection established")
+}
+
+// GetDB returns the database connection
+func GetDB() *gorm.DB {
+	return DB
 }
