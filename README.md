@@ -1,6 +1,3 @@
-
-### [`README.md`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fhome%2FBTABAKU%2Fdev%2Fgolang%2Fgo-task-management-api%2FREADME.md%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%227a4f1405-a3ea-41b4-83ee-63c25e85267d%22%5D "/home/BTABAKU/dev/golang/go-task-management-api/README.md")
-
 # Task Management API
 
 This is a simple task management API built with Go, Gorilla Mux, and GORM.
@@ -13,9 +10,33 @@ This is a simple task management API built with Go, Gorilla Mux, and GORM.
 - Docker
 - Docker Compose
 
+### Installation
+
+1. **Clone the repository:**
+
+   ```sh
+   git clone https://github.com/yourusername/go-task-management-api.git
+   cd go-task-management-api
+   ```
+
+2. **Copy the example environment file and update the configuration:**
+
+   ```sh
+   cp .env.example .env
+   ```
+
+3. **Build and run the application using Docker Compose:**
+
+   ```sh
+   docker-compose up --build
+   ```
+
+4. The API will be available at [http://localhost:8080](http://localhost:8080).
+
 ### Project Structure
 
 ```
+.
 ├── cmd
 │   └── server
 │       └── main.go
@@ -44,6 +65,7 @@ This is a simple task management API built with Go, Gorilla Mux, and GORM.
 │   └── routes
 │       └── routes.go
 └── README.md
+
 ```
 
 ### Running the Application
@@ -54,7 +76,7 @@ This is a simple task management API built with Go, Gorilla Mux, and GORM.
    docker-compose up --build
    ```
 
-2. The API will be available at [`http://localhost:8080`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fhome%2FBTABAKU%2Fdev%2Fgolang%2Fgo-task-management-api%2Fcmd%2Fserver%2Fmain.go%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A13%2C%22character%22%3A11%7D%7D%2C%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fhome%2FBTABAKU%2Fdev%2Fgolang%2Fgo-task-management-api%2Finternal%2Fhandlers%2Ftasks.go%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A45%2C%22character%22%3A15%7D%7D%2C%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fhome%2FBTABAKU%2Fdev%2Fgolang%2Fgo-task-management-api%2Finternal%2Fmiddleware%2Fauth.go%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A10%2C%22character%22%3A8%7D%7D%5D%2C%227a4f1405-a3ea-41b4-83ee-63c25e85267d%22%5D "Go to definition").
+2. The API will be available at [http://localhost:8080](http://localhost:8080).
 
 ### API Endpoints
 
@@ -67,12 +89,19 @@ This is a simple task management API built with Go, Gorilla Mux, and GORM.
 **Create a new task:**
 
 ```sh
-curl -X POST http://localhost:8080/tasks -d '{"title":"New Task","description":"Task description","status":"Pending"}' -H "Content-Type: application/json"
+curl -X POST http://localhost:8080/tasks \
+     -d '{"title":"New Task","description":"Task description","status":"Pending"}' \
+     -H "Content-Type: application/json" \
+     -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
 ### Authentication Middleware
 
-The authentication middleware is defined in [`internal/middleware/auth.go`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fhome%2FBTABAKU%2Fdev%2Fgolang%2Fgo-task-management-api%2Finternal%2Fmiddleware%2Fauth.go%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%227a4f1405-a3ea-41b4-83ee-63c25e85267d%22%5D "/home/BTABAKU/dev/golang/go-task-management-api/internal/middleware/auth.go"). It uses JWT for authentication.
+
+
+
+
+The authentication middleware is defined in `internal/middleware/auth.go`. It uses JWT for authentication.
 
 ```go
 package middleware
@@ -109,7 +138,7 @@ func Authenticate(next http.Handler) http.Handler {
 
 ### Database Setup
 
-The database is set up using GORM. The [`Task`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fhome%2FBTABAKU%2Fdev%2Fgolang%2Fgo-task-management-api%2Finternal%2Fhandlers%2Ftasks.go%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A13%2C%22character%22%3A16%7D%7D%2C%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fhome%2FBTABAKU%2Fdev%2Fgolang%2Fgo-task-management-api%2Finternal%2Fmodels%2Ftasks.go%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A4%2C%22character%22%3A3%7D%7D%5D%2C%227a4f1405-a3ea-41b4-83ee-63c25e85267d%22%5D "Go to definition") model is defined in [`internal/models/tasks.go`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fhome%2FBTABAKU%2Fdev%2Fgolang%2Fgo-task-management-api%2Finternal%2Fmodels%2Ftasks.go%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%227a4f1405-a3ea-41b4-83ee-63c25e85267d%22%5D "/home/BTABAKU/dev/golang/go-task-management-api/internal/models/tasks.go").
+The database is set up using GORM. The `Task` model is defined in `internal/models/tasks.go`.
 
 ```go
 package models
@@ -127,7 +156,7 @@ type Task struct {
 
 ### Handlers
 
-The handlers for CRUD operations are defined in [`internal/handlers/tasks.go`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fhome%2FBTABAKU%2Fdev%2Fgolang%2Fgo-task-management-api%2Finternal%2Fhandlers%2Ftasks.go%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%227a4f1405-a3ea-41b4-83ee-63c25e85267d%22%5D "/home/BTABAKU/dev/golang/go-task-management-api/internal/handlers/tasks.go").
+The handlers for CRUD operations are defined in `internal/handlers/tasks.go`.
 
 ```go
 package handlers
@@ -181,7 +210,7 @@ func DeleteTask(w http.ResponseWriter, r *http.Request) {
 
 ### Routes
 
-The routes are registered in [`internal/routes/routes.go`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fhome%2FBTABAKU%2Fdev%2Fgolang%2Fgo-task-management-api%2Finternal%2Froutes%2Froutes.go%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%227a4f1405-a3ea-41b4-83ee-63c25e85267d%22%5D "/home/BTABAKU/dev/golang/go-task-management-api/internal/routes/routes.go").
+The routes are registered in `internal/routes/routes.go`.
 
 ```go
 package routes
@@ -204,7 +233,7 @@ func RegisterRoutes() *mux.Router {
 
 ### Main Entry Point
 
-The main entry point of the application is in [`cmd/server/main.go`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fhome%2FBTABAKU%2Fdev%2Fgolang%2Fgo-task-management-api%2Fcmd%2Fserver%2Fmain.go%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%227a4f1405-a3ea-41b4-83ee-63c25e85267d%22%5D "/home/BTABAKU/dev/golang/go-task-management-api/cmd/server/main.go").
+The main entry point of the application is in `cmd/server/main.go`.
 
 ```go
 package main
@@ -228,13 +257,21 @@ func main() {
    - Replace the in-memory storage with a database using GORM.
 
 2. **Add authentication middleware to protect your endpoints:**
-   - Apply the [`Authenticate`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fhome%2FBTABAKU%2Fdev%2Fgolang%2Fgo-task-management-api%2Finternal%2Fmiddleware%2Fauth.go%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A9%2C%22character%22%3A5%7D%7D%5D%2C%227a4f1405-a3ea-41b4-83ee-63c25e85267d%22%5D "Go to definition") middleware to routes that require authentication.
+   - Apply the `Authenticate` middleware to routes that require authentication.
 
 3. **Write unit tests for your handlers:**
    - Create a new file `internal/handlers/tasks_test.go` and write tests for each handler.
 
 4. **Dockerize the application:**
-   - Ensure the [`Dockerfile`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fhome%2FBTABAKU%2Fdev%2Fgolang%2Fgo-task-management-api%2FDockerfile%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%227a4f1405-a3ea-41b4-83ee-63c25e85267d%22%5D "/home/BTABAKU/dev/golang/go-task-management-api/Dockerfile") and [`docker-compose.yml`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fhome%2FBTABAKU%2Fdev%2Fgolang%2Fgo-task-management-api%2Fdocker-compose.yml%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%227a4f1405-a3ea-41b4-83ee-63c25e85267d%22%5D "/home/BTABAKU/dev/golang/go-task-management-api/docker-compose.yml") are correctly set up to build and run the application.
+   - Ensure the `Dockerfile` and `docker-compose.yml` are correctly set up to build and run the application.
 
 5. **Update the documentation:**
-   - Add more detailed usage instructions and examples in the [`README.md`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fhome%2FBTABAKU%2Fdev%2Fgolang%2Fgo-task-management-api%2FREADME.md%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%227a4f1405-a3ea-41b4-83ee-63c25e85267d%22%5D "/home/BTABAKU/dev/golang/go-task-management-api/README.md").
+   - Add more detailed usage instructions and examples in the `README.md`.
+
+### Contributing
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+
+### License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

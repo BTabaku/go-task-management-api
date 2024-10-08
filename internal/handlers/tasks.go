@@ -2,10 +2,11 @@ package handlers
 
 import (
 	"encoding/json"
+	"go-task-management-api/internal/config"
+	"go-task-management-api/internal/models"
 	"net/http"
 	"strconv"
 	"sync"
-
 	"github.com/gorilla/mux"
 )
 
@@ -30,15 +31,17 @@ func GetTasks(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreateTask(w http.ResponseWriter, r *http.Request) {
-	var task Task
+	var task models.Task
 	err := json.NewDecoder(r.Body).Decode(&task)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	task.ID = len(tasks) + 1
-	tasks = append(tasks, task)
+	if err := config.DB.Create(&task).Error; err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(task)
