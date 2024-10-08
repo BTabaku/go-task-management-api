@@ -16,25 +16,34 @@ This is a simple task management API built with Go, Gorilla Mux, and GORM.
 ### Project Structure
 
 ```
-cmd/
-	server/
-		main.go
-docker-compose.yml
-Dockerfile
-go.mod
-go.sum
-internal/
-	config/
-		config.go
-	handlers/
-		tasks.go
-	middleware/
-		auth.go
-	models/
-		tasks.go
-	routes/
-		routes.go
-README.md
+├── cmd
+│   └── server
+│       └── main.go
+├── deployments
+│   └── k8s
+│       ├── task-api-deployment.yml
+│       └── task-api-service.yml
+├── docker-compose.yml
+├── Dockerfile
+├── generate_token.go
+├── go.mod
+├── go.sum
+├── init-db.sh
+├── internal
+│   ├── config
+│   │   ├── config.go
+│   │   ├── db.go
+│   │   └── db_test.go
+│   ├── handlers
+│   │   ├── tasks.go
+│   │   └── tasks_test.go
+│   ├── middleware
+│   │   └── auth.go
+│   ├── models
+│   │   └── tasks.go
+│   └── routes
+│       └── routes.go
+└── README.md
 ```
 
 ### Running the Application
