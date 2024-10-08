@@ -2,14 +2,12 @@ package routes
 
 import (
 	"go-task-management-api/internal/handlers"
-	"go-task-management-api/internal/middleware"
 
 	"github.com/gorilla/mux"
 )
 
-func RegisterRoutes() *mux.Router {
+func SetupRouter() *mux.Router {
 	router := mux.NewRouter()
-	router.Use(middleware.Authenticate)
 	router.HandleFunc("/tasks", handlers.GetTasks).Methods("GET")
 	router.HandleFunc("/tasks", handlers.CreateTask).Methods("POST")
 	router.HandleFunc("/tasks/{id}", handlers.DeleteTask).Methods("DELETE")

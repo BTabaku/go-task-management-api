@@ -32,13 +32,11 @@ func TestMain(m *testing.M) {
 }
 
 func setupTestDB() *gorm.DB {
-	// Use a PostgreSQL database for testing
-	dsn := "host=localhost user=your_user password=your_password dbname=tasks_db_test port=5432 sslmode=disable"
+	dsn := "host=localhost user=task_manager password=SecureP@ssw0rd! dbname=task_management_test port=5432 sslmode=disable"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
-	// Migrate the schema
 	db.AutoMigrate(&models.Task{})
 	return db
 }

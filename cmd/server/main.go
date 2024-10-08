@@ -9,23 +9,15 @@ import (
 )
 
 func main() {
-	// Load configuration
-	_, err := config.LoadConfig(".env")
-	if err != nil {
-		log.Fatalf("Failed to load config: %v", err)
-	}
+	config.ConnectDB()
 
-	// Initialize database
-	config.InitDatabase()
+	router := routes.SetupRouter()
 
-	// Register routes
-	router := routes.RegisterRoutes()
-
-	// Start the server
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 	}
-	log.Printf("Starting server on port %s", port)
+
+	log.Printf("Server starting on port %s", port)
 	log.Fatal(http.ListenAndServe(":"+port, router))
 }

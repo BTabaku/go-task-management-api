@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strconv"
 	"sync"
+
 	"github.com/gorilla/mux"
 )
 
@@ -51,14 +52,9 @@ func DeleteTask(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id, _ := strconv.Atoi(params["id"])
 
-	mu.Lock()
-	defer mu.Unlock()
-
-	for i, task := range tasks {
-		if task.ID == id {
-			tasks = append(tasks[:i], tasks[i+1:]...)
-			break
-		}
+	if err := config.DB.Delete(&models.Task{}, id).Error; err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 
 	w.WriteHeader(http.StatusNoContent)
